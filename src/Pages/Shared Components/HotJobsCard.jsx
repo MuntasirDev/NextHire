@@ -144,7 +144,7 @@ const HotJobsCard = ({ job }) => {
         <div className="text-2xl font-bold text-gray-900">{displaySalary}</div>
        <Link 
             to={`/jobs/${_id}`} 
-            className="px-6 py-3 bg-violet-700 hover:bg-violet-800 text-white font-semibold rounded-lg shadow-md transition duration-300"
+            className="shrink-0 px-5 py-2.5 bg-violet-700 hover:bg-violet-800 text-white text-sm font-bold rounded-lg shadow transition-all duration-300 whitespace-nowrap"
         >
           View Details
         </Link>

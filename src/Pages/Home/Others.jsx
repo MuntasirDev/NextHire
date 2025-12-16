@@ -57,7 +57,8 @@ const LocationCard = ({ city, country, count, image, tag }) => (
         {city}, {country}
       </h3>
       <p className="text-sm text-gray-500 mt-1 flex items-center">
-        <FaMapMarkerAlt className="w-3 h-3 mr-1 text-violet-500" /> {count} companies
+        <FaMapMarkerAlt className="w-3 h-3 mr-1 text-violet-500" /> {count}{" "}
+        companies
       </p>
     </div>
   </motion.div>
@@ -65,12 +66,45 @@ const LocationCard = ({ city, country, count, image, tag }) => (
 
 const JobsByLocation = () => {
   const locationData = [
-    { city: "Paris", country: "France", count: 120, image: LocationImageParis, tag: "New" },
-    { city: "London", country: "England", count: 68, image: LocationImageLondon, tag: "Trending" },
-    { city: "New York", country: "USA", count: 90, image: LocationImageNewYork, tag: "New" },
-    { city: "Amsterdam", country: "Holland", count: 86, image: LocationImageAmsterdam },
-    { city: "Copenhagen", country: "Denmark", count: 186, image: LocationImageCopenhagen },
-    { city: "Berlin", country: "Germany", count: 92, image: LocationImageBerlin },
+    {
+      city: "Paris",
+      country: "France",
+      count: 120,
+      image: LocationImageParis,
+      tag: "New",
+    },
+    {
+      city: "London",
+      country: "England",
+      count: 68,
+      image: LocationImageLondon,
+      tag: "Trending",
+    },
+    {
+      city: "New York",
+      country: "USA",
+      count: 90,
+      image: LocationImageNewYork,
+      tag: "New",
+    },
+    {
+      city: "Amsterdam",
+      country: "Holland",
+      count: 86,
+      image: LocationImageAmsterdam,
+    },
+    {
+      city: "Copenhagen",
+      country: "Denmark",
+      count: 186,
+      image: LocationImageCopenhagen,
+    },
+    {
+      city: "Berlin",
+      country: "Germany",
+      count: 92,
+      image: LocationImageBerlin,
+    },
   ];
 
   return (
@@ -83,8 +117,12 @@ const JobsByLocation = () => {
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-extrabold text-gray-900">Jobs by Location</h2>
-          <p className="text-gray-500">Find your favourite jobs and get the benefits of yourself</p>
+          <h2 className="text-3xl font-extrabold text-gray-900">
+            Jobs by Location
+          </h2>
+          <p className="text-gray-500">
+            Find your favourite jobs and get the benefits of yourself
+          </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
           {locationData.map((loc, index) => (
@@ -105,10 +143,15 @@ const BlogCard = ({ title, date, author, readTime, image, category }) => (
       <img src={image} alt={title} className="w-full h-full object-cover" />
     </div>
     <div className="p-4">
-      <span className="text-xs font-semibold text-violet-600 uppercase">{category}</span>
-      <h3 className="text-lg font-bold text-gray-900 my-2 line-clamp-2">{title}</h3>
+      <span className="text-xs font-semibold text-violet-600 uppercase">
+        {category}
+      </span>
+      <h3 className="text-lg font-bold text-gray-900 my-2 line-clamp-2">
+        {title}
+      </h3>
       <p className="text-sm text-gray-500 mb-3 line-clamp-3">
-        Find the most sustainable healthcare company by creating high-quality products.
+        Find the most sustainable healthcare company by creating high-quality
+        products.
       </p>
       <div className="flex justify-between items-center text-xs text-gray-400 border-t pt-3">
         <div className="flex items-center space-x-1">
@@ -127,9 +170,30 @@ const BlogCard = ({ title, date, author, readTime, image, category }) => (
 
 const NewsAndBlog = () => {
   const blogData = [
-    { title: "39 Strengths and Weaknesses To Discuss in a Job Interview", date: "06 September", author: "Steven Jobs", readTime: 6, image: BlogImage1, category: "Review" },
-    { title: "Interview Question: Why Don't You Have a Degree?", date: "06 September", author: "William Brand", readTime: 8, image: BlogImage2, category: "Article" },
-    { title: "21 Job Interview Tips: How To Make a Great Impression", date: "06 September", author: "Social Media", readTime: 5, image: BlogImage1, category: "Review" },
+    {
+      title: "39 Strengths and Weaknesses To Discuss in a Job Interview",
+      date: "06 September",
+      author: "Steven Jobs",
+      readTime: 6,
+      image: BlogImage1,
+      category: "Review",
+    },
+    {
+      title: "Interview Question: Why Don't You Have a Degree?",
+      date: "06 September",
+      author: "William Brand",
+      readTime: 8,
+      image: BlogImage2,
+      category: "Article",
+    },
+    {
+      title: "21 Job Interview Tips: How To Make a Great Impression",
+      date: "06 September",
+      author: "Social Media",
+      readTime: 5,
+      image: BlogImage1,
+      category: "Review",
+    },
   ];
 
   return (
@@ -142,7 +206,9 @@ const NewsAndBlog = () => {
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-extrabold text-gray-900">News and Blog</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900">
+            News and Blog
+          </h2>
           <p className="text-gray-500">Get the latest news, updates and tips</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -160,7 +226,6 @@ const NewsAndBlog = () => {
   );
 };
 
-// সংশোধিত CTA: ছোট, সেন্টারেড এবং রাউন্ডেড
 const SubscriptionCTA = () => (
   <div className="flex justify-center items-center py-16 px-4 bg-gray-50">
     <motion.section
@@ -170,15 +235,15 @@ const SubscriptionCTA = () => (
       variants={sectionVariants}
       className="w-full max-w-6xl py-12 px-8 rounded-3xl bg-violet-600 relative overflow-hidden shadow-2xl"
     >
-      {/* Background Decorative Shape */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 -mr-20 -mt-20 rounded-full"></div>
-      
+
       <div className="max-w-3xl mx-auto text-center relative z-10">
         <motion.h2
           variants={itemVariants}
           className="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight"
         >
-          New Things Will Always <br className="hidden md:block" /> Update Regularly
+          New Things Will Always <br className="hidden md:block" /> Update
+          Regularly
         </motion.h2>
 
         <motion.div

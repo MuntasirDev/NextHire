@@ -7,45 +7,52 @@ import JobDetails from "../Pages/JobDetails/JobDetails";
 import PrivateRoute from "../Routes/PrivateRoute";
 import JobApply from "../JobApply/JobApply";
 import Browsejobs from "../Pages/Browsejobs/Browsejobs";
-
+import MyApllications from "../Pages/MyApllications/MyApllications";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        Component: MainLayout,
-        children: [
-            {
-                index: true,
-                Component: Home
-            },
-            {
-                path:"browsejobs", // ✅ এই রুটটিই ব্যবহার করা হবে নেভিগেট করার জন্য
-                Component: Browsejobs
-            },
-            {
-                path: '/jobs/:id',
-                Component: JobDetails,
-                loader: ({params}) => 
-                { return fetch(`http://localhost:3000/Jobs/${params.id}`);
-            
-            }
-                
-                
-            },
-            {
-                path: "jobApply/:id",
-                element: <PrivateRoute><JobApply></JobApply></PrivateRoute>
-            },
-            {
-                path: '/register',
-                Component: Register
-            },
-            {
-                path: '/signin',
-                Component: SignIn
-            }
-        ]
-    },
+  {
+    path: "/",
+    Component: MainLayout,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "browsejobs", 
+        Component: Browsejobs,
+      },
+      {
+        path: "dashboard",
+         element: <PrivateRoute><MyApllications></MyApllications></PrivateRoute>
+
+      },
+ 
+      {
+        path: "/jobs/:id",
+        Component: JobDetails,
+        loader: ({ params }) => {
+          return fetch(`http://localhost:3000/Jobs/${params.id}`);
+        },
+      },
+      {
+        path: "jobApply/:id",
+        element: (
+          <PrivateRoute>
+            <JobApply></JobApply>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/register",
+        Component: Register,
+      },
+      {
+        path: "/signin",
+        Component: SignIn,
+      },
+    ],
+  },
 ]);
 
 export default router;

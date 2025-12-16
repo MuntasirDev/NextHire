@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// যদি আপনি HotJobsCard কম্পোনেন্টটি এখানে ব্যবহার করতে চান
 import HotJobsCard from '../Shared Components/HotJobsCard'; 
 
 const Browsejobs = () => {
@@ -7,7 +6,7 @@ const Browsejobs = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
-    // API endpoint: আপনার router.jsx-এ ব্যবহৃত বেস URL
+    
     const API_URL = "http://localhost:3000/Jobs"; 
 
     useEffect(() => {
@@ -30,19 +29,17 @@ const Browsejobs = () => {
         };
 
         fetchAllJobs();
-    }, []); // Dependency array empty, so it runs once on mount
-
-    // --- Loading State Handling ---
+    }, []); 
     if (loading) {
         return (
             <div className="min-h-screen flex justify-center items-center bg-white">
                 <span className="text-xl text-violet-700">Loading all job listings...</span>
-                {/* Tailwind/DaisyUI স্পিনার কম্পোনেন্ট থাকলে এখানে ব্যবহার করতে পারেন */}
+               
             </div>
         );
     }
 
-    // --- Error State Handling ---
+ 
     if (error) {
         return (
             <div className="min-h-screen py-20 text-center bg-red-50">
@@ -55,7 +52,7 @@ const Browsejobs = () => {
         );
     }
     
-    // --- Main Content & Data Display ---
+   
     return (
         <div className="min-h-screen py-20 bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,10 +70,10 @@ const Browsejobs = () => {
                         <p className="text-2xl text-gray-700">Sorry, no job listings found.</p>
                     </div>
                 ) : (
-                    // জব কার্ডগুলি রেন্ডার করা হচ্ছে
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {jobs.map((job) => (
-                            // আপনি এখানে HotJobsCard বা অন্য কোনো JobCard ব্যবহার করতে পারেন
+                           
                             <HotJobsCard key={job._id} job={job} />
                         ))}
                     </div>

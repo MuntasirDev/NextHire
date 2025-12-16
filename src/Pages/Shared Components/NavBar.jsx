@@ -23,7 +23,6 @@ const NavBar = () => {
         { to: "BrowseJobs", label: "Browse Jobs" } 
     ];
 
-    // 💡 ড্যাশবোর্ড বা ইউজার-নির্দিষ্ট লিংক শর্তসাপেক্ষে যোগ করা
     if (user) {
         navLinks.push(
             { to: "/dashboard", label: "Dashboard", icon: <FaTachometerAlt className="inline-block mr-1" /> }
