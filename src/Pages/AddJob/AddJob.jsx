@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import LottieWrapper from "lottie-react";
 import { motion } from "framer-motion";
 import { FaBriefcase, FaPaperPlane } from "react-icons/fa";
@@ -6,12 +6,13 @@ import jobAddAnimation from "../../assets/Lotties/Company employees sharing thou
 import UseAuth from "../../Hooks/UseAuth";
 import Others from "../Home/Others";
 import Swal from "sweetalert2";
-import axios from "axios"; // ১. এখানে axios ইমপোর্ট করা হয়েছে
+import axios from "axios";
 
 const Lottie = LottieWrapper.default || LottieWrapper;
 
 const AddJob = () => {
   const { user } = UseAuth();
+  const [loading, setLoading] = useState(false);
 
   const handleAddJob = (e) => {
     e.preventDefault();
@@ -19,44 +20,66 @@ const AddJob = () => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
+    // ১. ডাটা ডিস্ট্রাকচারিং এবং ভ্যালিডেশন
     const { min, max, currency, ...newJob } = data;
 
-    // Data Formatting
-    newJob.salaryRange = { min, max, currency };
-    newJob.requirements = newJob.requirements
-      .split(",")
-      .map((req) => req.trim());
-    newJob.responsibilities = newJob.responsibilities
-      .split(",")
-      .map((res) => res.trim());
+    // স্যালারি নেগেটিভ কি না চেক
+    if (Number(min) < 0 || Number(max) < 0) {
+      return Swal.fire("Error", "Salary cannot be negative!", "error");
+    }
+
+    // মিনিমাম স্যালারি ম্যাক্সিমামের চেয়ে বেশি কি না চেক
+    if (Number(min) > Number(max)) {
+      return Swal.fire("Error", "Min salary can't be more than Max salary!", "error");
+    }
+
+    // ডেডলাইন অতীত কি না চেক
+    const selectedDate = new Date(data.deadline);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+    if (selectedDate < today) {
+      return Swal.fire("Error", "Deadline cannot be in the past!", "error");
+    }
+
+    // ২. ডাটা ফরম্যাটিং (আপনার দেওয়া নতুন লজিক অনুযায়ী)
+    newJob.salaryRange = { 
+        min: parseInt(min), 
+        max: parseInt(max), 
+        currency 
+    };
+
+    // স্ট্রিংকে অ্যারেতে রূপান্তর (কমা সেপারেটেড)
+    newJob.requirements = data.requirements.split(",").map((req) => req.trim());
+    newJob.responsibilities = data.responsibilities.split(",").map((res) => res.trim());
     newJob.status = "active";
 
-    console.log("Structured Job Data:", newJob);
+    setLoading(true);
 
- 
+    // ৩. সার্ভারে ডাটা পাঠানো
     axios
-      .post("http://localhost:3000/Jobs", newJob)
+      .post("http://localhost:3000/jobs", newJob)
       .then((res) => {
         if (res.data.insertedId) {
-         
           Swal.fire({
             icon: "success",
             title: "Success!",
             text: "Your Job has been saved & published successfully",
-            confirmButtonColor: "#6d28d9", 
+            confirmButtonColor: "#6d28d9",
           });
-          form.reset(); 
+          form.reset(); // সফল হলে ফর্ম ক্লিয়ার হবে
         }
       })
       .catch((error) => {
         console.error(error);
-        
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Something went wrong! Please try again.",
           confirmButtonColor: "#ef4444",
         });
+      })
+      .finally(() => {
+        setLoading(false); // লোডিং বন্ধ
       });
   };
 
@@ -143,40 +166,35 @@ const AddJob = () => {
 
                 <div className="space-y-8">
                   {/* Job Type */}
-                <fieldset className="fieldset bg-violet-50/50 border-base-300 rounded-2xl border p-6 shadow-sm">
-  <legend className="fieldset-legend font-bold text-violet-700 px-2">
-    Job Type
-  </legend>
-  <div className="flex flex-wrap gap-2">
-    {/* On-site */}
-    <input
-      type="radio"
-      name="jobType"
-      value="On-site"
-      className="btn btn-outline checked:bg-violet-700 checked:text-white"
-      aria-label="On-site"
-      defaultChecked
-    />
-    
-    {/* Hybrid */}
-    <input
-      type="radio"
-      name="jobType"
-      value="Hybrid"
-      className="btn btn-outline checked:bg-violet-700 checked:text-white"
-      aria-label="Hybrid"
-    />
-    
-    {/* Remote */}
-    <input
-      type="radio"
-      name="jobType"
-      value="Remote"
-      className="btn btn-outline checked:bg-violet-700 checked:text-white"
-      aria-label="Remote"
-    />
-  </div>
-</fieldset>
+                  <fieldset className="fieldset bg-violet-50/50 border-base-300 rounded-2xl border p-6 shadow-sm">
+                    <legend className="fieldset-legend font-bold text-violet-700 px-2">
+                      Job Type
+                    </legend>
+                    <div className="flex flex-wrap gap-2">
+                      <input
+                        type="radio"
+                        name="jobType"
+                        value="On-site"
+                        className="btn btn-outline checked:bg-violet-700 checked:text-white"
+                        aria-label="On-site"
+                        defaultChecked
+                      />
+                      <input
+                        type="radio"
+                        name="jobType"
+                        value="Hybrid"
+                        className="btn btn-outline checked:bg-violet-700 checked:text-white"
+                        aria-label="Hybrid"
+                      />
+                      <input
+                        type="radio"
+                        name="jobType"
+                        value="Remote"
+                        className="btn btn-outline checked:bg-violet-700 checked:text-white"
+                        aria-label="Remote"
+                      />
+                    </div>
+                  </fieldset>
 
                   {/* Job Category */}
                   <fieldset className="fieldset bg-violet-50/50 border-base-300 rounded-2xl border p-6 shadow-sm">
@@ -190,29 +208,17 @@ const AddJob = () => {
                     >
                       <option disabled>Select Job Category</option>
                       <option>Data Science</option>
-
                       <option>Teaching</option>
-
                       <option>Engineering</option>
-
                       <option>Finance</option>
-
                       <option>Marketing</option>
-
                       <option>Development</option>
-
                       <option>Design</option>
-
                       <option>Management</option>
-
                       <option>Infrastructure</option>
-
                       <option>Quality Assurance</option>
-
                       <option>Product Management</option>
-
-                      <option> E-commerce</option>
-
+                      <option>E-commerce</option>
                       <option>IT Support</option>
                     </select>
                   </fieldset>
@@ -226,6 +232,7 @@ const AddJob = () => {
                   <input
                     type="number"
                     name="min"
+                    min="0"
                     className="input input-bordered w-full mb-2"
                     placeholder="Min Salary"
                     required
@@ -233,6 +240,7 @@ const AddJob = () => {
                   <input
                     type="number"
                     name="max"
+                    min="0"
                     className="input input-bordered w-full mb-2"
                     placeholder="Max Salary"
                     required
@@ -269,6 +277,7 @@ const AddJob = () => {
                   <input
                     type="date"
                     name="deadline"
+                    min={new Date().toISOString().split("T")[0]}
                     className="input input-bordered w-full"
                     required
                   />
@@ -298,9 +307,15 @@ const AddJob = () => {
 
               <button
                 type="submit"
-                className="btn btn-block bg-violet-700 text-white font-bold mt-6 h-14 text-lg border-none hover:bg-violet-800"
+                disabled={loading}
+                className="btn btn-block bg-violet-700 text-white font-bold mt-6 h-14 text-lg border-none hover:bg-violet-800 disabled:bg-gray-400"
               >
-                <FaPaperPlane /> Add Job Listing
+                {loading ? (
+                  <span className="loading loading-spinner"></span>
+                ) : (
+                  <FaPaperPlane />
+                )}
+                {loading ? " Posting..." : " Add Job Listing"}
               </button>
             </form>
           </div>
