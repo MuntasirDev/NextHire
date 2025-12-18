@@ -22,7 +22,11 @@ const ApplicationStats = () => {
             </div>
           </div>
           <div className="w-20 h-20 opacity-90 group-hover:scale-110 transition-transform duration-300">
-            <Lottie animationData={statsLottie} loop={true} />
+            <Lottie
+              style={{ height: 100, width: 100 }}
+              animationData={statsLottie}
+              loop={true}
+            />
           </div>
         </div>
 
@@ -65,10 +69,6 @@ const ApplicationStats = () => {
           <div className="w-24 h-24 bg-white/10 rounded-xl backdrop-blur-sm">
             <Lottie animationData={statsLottie3} loop={true} />
           </div>
-        </div>
-
-        <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
-          <Lottie animationData={statsLottie} loop={true} />
         </div>
       </div>
     </div>
