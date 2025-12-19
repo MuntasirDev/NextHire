@@ -59,7 +59,7 @@ const MyPostedJobs = () => {
         <div className="mb-16">
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-violet-100 rounded-xl text-violet-700 font-bold">
-               My Active Listings
+               My Active Listings 
             </div>
           </div>
 

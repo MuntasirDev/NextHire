@@ -73,7 +73,7 @@ const MyApllications = () => {
             >
               <img 
                 src={img} 
-                alt="visual" 
+                alt="visual"  
                 className="w-full h-36 md:h-44 object-cover"
               />
             </motion.div>

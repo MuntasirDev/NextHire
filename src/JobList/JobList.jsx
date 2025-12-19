@@ -44,7 +44,7 @@ const JobList = ({ jobsCreatedBypromise }) => {
                                     </div>
                                 </td>
                                 
-                                <td>{job.company}</td>
+                                <td>{job.company}</td>  
                                 <td>
                                     <span className="badge badge-ghost badge-sm">{job.jobType}</span>
                                 </td>
