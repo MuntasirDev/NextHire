@@ -46,6 +46,9 @@ const JobList = ({ jobsCreatedBypromise }) => {
                                 
                                 <td>{job.company}</td>  
                                 <td>
+
+
+                                    
                                     <span className="badge badge-ghost badge-sm">{job.jobType}</span>
                                 </td>
                                 <td>{job.deadline || job.applicationDeadline}</td>
