@@ -1,18 +1,16 @@
 import React, { use } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom"; // react-router না, react-router-dom ব্যবহার করুন
 
 const JobList = ({ jobsCreatedBypromise }) => {
-  // Promise থেকে ডাটা রেজলভ করা
-  const job = use(jobsCreatedBypromise);
+  const jobs = use(jobsCreatedBypromise);
 
   return (
     <div className="overflow-x-auto w-full bg-white rounded-xl shadow-md p-6">
       <h2 className="text-3xl font-bold text-violet-800 mb-6">
-        job Created By You: {job?.length || 0}
+        Jobs Created By You: {jobs?.length || 0}
       </h2>
 
       <table className="table w-full">
-        {/* Table Header */}
         <thead>
           <tr className="bg-violet-100 text-violet-700">
             <th>No.</th>
@@ -20,16 +18,14 @@ const JobList = ({ jobsCreatedBypromise }) => {
             <th>Company</th>
             <th>Type</th>
             <th>Deadline</th>
-            <th>
-              Count
-            </th>
+            <th>Count</th>
             <th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
-          {job && job.length > 0 ? (
-            job.map((job, index) => (
+          {jobs && jobs.length > 0 ? (
+            jobs.map((job, index) => (
               <tr key={job._id} className="hover:bg-base-200 transition-colors">
                 <th>{index + 1}</th>
                 <td>
@@ -40,39 +36,35 @@ const JobList = ({ jobsCreatedBypromise }) => {
                       </div>
                     </div>
                     <div>
-                      {/* এখানে title এবং jobTitle দুটিই চেক করা হচ্ছে */}
-                      <div className="font-bold">
-                        {job.jobTitle || job.title}
-                      </div>
+                      <div className="font-bold">{job.jobTitle || job.title}</div>
                       <div className="text-sm opacity-50">{job.location}</div>
                     </div>
                   </div>
                 </td>
-
                 <td>{job.company}</td>
                 <td>
-                  <span className="badge badge-ghost badge-sm">
-                    {job.jobType}
-                  </span>
+                  <span className="badge badge-ghost badge-sm">{job.jobType}</span>
                 </td>
                 <td>{job.deadline || job.applicationDeadline}</td>
-                <td className="badge badge-ghost badge-sm">0</td>
+                {/* এখানে ডাইনামিক কাউন্ট বসানো হয়েছে */}
+                <td>
+                  <span className="badge badge-primary font-bold">
+                    {job.applicationCount || 0}
+                  </span>
+                </td>
                 <td>
                   <Link
                     to={`/applications/${job._id}`}
-                    className="btn btn-ghost btn-xs text-blue-600"
+                    className="btn btn-violet btn-xs text-white bg-violet-600 hover:bg-violet-700 border-none"
                   >
-                    View Details
+                    View Applications
                   </Link>
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td
-                colSpan="6"
-                className="text-center py-10 text-gray-500 italic"
-              >
+              <td colSpan="7" className="text-center py-10 text-gray-500 italic">
                 No job posted yet.
               </td>
             </tr>
