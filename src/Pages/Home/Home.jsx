@@ -8,21 +8,23 @@ import SearchJobs from './SearchJobs';
 import Others from './Others';
 
 const Home = () => {
-    const jobsPromise = fetch('http://localhost:3000/Jobs').then(res => res.json())
+    // credentials: 'include' যোগ করা হয়েছে যাতে ব্রাউজার টোকেন পাঠাতে পারে
+    const jobsPromise = fetch('http://localhost:3000/Jobs', {
+        credentials: 'include' 
+    }).then(res => res.json());
+
     return (
         <div>
             <Banner></Banner>
             <SearchCategory></SearchCategory>
             <BrowuseCategoryHome></BrowuseCategoryHome>
             <HiringRouts></HiringRouts>
-            <Suspense fallback={<div>Loading Hot Jobs...</div>}>
+            <Suspense fallback={<div className="text-center py-10">Loading Hot Jobs...</div>}>
                 <HotJobs jobsPromise={jobsPromise}></HotJobs>
             </Suspense>
 
             <SearchJobs></SearchJobs>
             <Others></Others>
-
-
         </div>
     );
 };

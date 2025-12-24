@@ -15,15 +15,15 @@ import img4 from "../../assets/Images/blog2.jpg";
 
 const MyApllications = () => {
   const { user } = UseAuth();
-  const { id } = useParams(); // URL থেকে Job ID নেওয়া হচ্ছে
+  const { id } = useParams(); 
 
   const applicationsPromise = useMemo(() => {
     if (id) {
-      // HR যখন নির্দিষ্ট কোনো জবের আবেদন দেখছে
+     
       return fetchJobSpecificApplications(id);
     }
     if (user?.email) {
-      // ক্যান্ডিডেট যখন নিজের সব আবেদন দেখছে
+     
       return fetchMyApplications(user.email);
     }
     return null;
@@ -74,7 +74,7 @@ const MyApllications = () => {
         </div>
       </header>
 
-      {/* ক্যান্ডিডেট ভিউতে স্ট্যাটাস দেখাবে, HR ভিউতে নয় */}
+      
       {!id && (
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

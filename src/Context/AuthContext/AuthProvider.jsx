@@ -29,11 +29,11 @@ const AuthProvider = ({children}) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    // SignOut (সংশোধিত: কুকি মুছে ফেলার জন্য ব্যাকএন্ড কল করা হয়েছে)
+   
     const signOutUser = () => {
         setLoading(true);
         return signOut(auth).then(() => {
-            // লগআউট করার সময় কুকি ক্লিন করা
+            
             axios.post('http://localhost:3000/logout', {}, { withCredentials: true })
                 .then(() => {
                     console.log("Logged out and cookie cleared");
@@ -57,18 +57,18 @@ const AuthProvider = ({children}) => {
             if (currentUser?.email) {
                 const userData = { email: currentUser.email };
                 
-                // ১. সার্ভারে টোকেন রিকোয়েস্ট পাঠানো এবং কুকি সেট করা
+               
                 axios.post('http://localhost:3000/jwt', userData, { withCredentials: true })
                     .then((res) => {
                         console.log("Cookie response from server:", res.data);
-                        setLoading(false); // কুকি সেট হওয়ার পর লোডিং ফলস করা ভালো
+                        setLoading(false); 
                     })
                     .catch((error) => {
                         console.log("JWT Error:", error);
                         setLoading(false);
                     });
             } else {
-                // ইউজার না থাকলে লোডিং ফলস করা
+               
                 setLoading(false);
             }
             
