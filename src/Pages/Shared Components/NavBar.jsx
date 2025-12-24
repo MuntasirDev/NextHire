@@ -10,7 +10,9 @@ import {
   FaPlusCircle,
   FaHome,
   FaSearch,
+  FaInfoCircle,
 } from "react-icons/fa";
+import { nav } from "motion/react-client";
 
 const NavBar = () => {
   const { user, signOutUser } = useContext(AuthContext);
@@ -59,7 +61,17 @@ const NavBar = () => {
       icon: <FaBriefcase className="inline-block mr-1" />,
         }
     )
+
+    navLinks.push(
+        {
+           to: "/aboutus",
+      label: "About Us",
+      icon: <FaInfoCircle className="inline-block mr-1" />,
+        }
+    )
 }
+
+
 
   const links = (
     <>

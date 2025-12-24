@@ -20,20 +20,17 @@ const AddJob = () => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // ১. ডাটা ডিস্ট্রাকচারিং এবং ভ্যালিডেশন
+   
     const { min, max, currency, ...newJob } = data;
 
-    // স্যালারি নেগেটিভ কি না চেক
     if (Number(min) < 0 || Number(max) < 0) {
       return Swal.fire("Error", "Salary cannot be negative!", "error");
     }
 
-    // মিনিমাম স্যালারি ম্যাক্সিমামের চেয়ে বেশি কি না চেক
     if (Number(min) > Number(max)) {
       return Swal.fire("Error", "Min salary can't be more than Max salary!", "error");
     }
 
-    // ডেডলাইন অতীত কি না চেক
     const selectedDate = new Date(data.deadline);
     const today = new Date();
     today.setHours(0, 0, 0, 0); 
@@ -41,21 +38,21 @@ const AddJob = () => {
       return Swal.fire("Error", "Deadline cannot be in the past!", "error");
     }
 
-    // ২. ডাটা ফরম্যাটিং (আপনার দেওয়া নতুন লজিক অনুযায়ী)
+  
     newJob.salaryRange = { 
         min: parseInt(min), 
         max: parseInt(max), 
         currency 
     };
 
-    // স্ট্রিংকে অ্যারেতে রূপান্তর (কমা সেপারেটেড)
+   
     newJob.requirements = data.requirements.split(",").map((req) => req.trim());
     newJob.responsibilities = data.responsibilities.split(",").map((res) => res.trim());
     newJob.status = "active";
 
     setLoading(true);
 
-    // ৩. সার্ভারে ডাটা পাঠানো
+  
     axios
       .post("http://localhost:3000/jobs", newJob)
       .then((res) => {
@@ -66,7 +63,7 @@ const AddJob = () => {
             text: "Your Job has been saved & published successfully",
             confirmButtonColor: "#6d28d9",
           });
-          form.reset(); // সফল হলে ফর্ম ক্লিয়ার হবে
+          form.reset(); 
         }
       })
       .catch((error) => {
@@ -79,7 +76,7 @@ const AddJob = () => {
         });
       })
       .finally(() => {
-        setLoading(false); // লোডিং বন্ধ
+        setLoading(false); 
       });
   };
 

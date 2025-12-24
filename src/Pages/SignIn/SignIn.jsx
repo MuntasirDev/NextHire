@@ -11,9 +11,9 @@ const SignIn = () => {
   const { SignInUser } = useContext(AuthContext);
 
   const location = useLocation();
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const from = location.state || "/";
-  console.log()
+  console.log();
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -89,14 +89,11 @@ const navigate = useNavigate();
                   Sign In
                 </button>
               </fieldset>
-              
             </form>
 
-           <div className="justify-items-center">
-            <SocialLogin from={from} ></SocialLogin>
-            </div> 
-
-            
+            <div className="justify-items-center">
+              <SocialLogin from={from}></SocialLogin>
+            </div>
 
             <div className="text-center mt-6 text-sm text-gray-600">
               New here?

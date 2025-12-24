@@ -97,7 +97,7 @@ const SearchJobs = () => {
           >
             <div className="bg-violet-50 rounded-2xl p-6 shadow-2xl relative">
               <img
-                src={HeroImage} // Replace with actual image path or placeholder
+                src={HeroImage} 
                 alt="Diverse team celebrating success"
                 className="w-full h-auto object-cover rounded-xl shadow-xl"
               />

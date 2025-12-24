@@ -8,7 +8,7 @@ import SearchJobs from './SearchJobs';
 import Others from './Others';
 
 const Home = () => {
-    // credentials: 'include' যোগ করা হয়েছে যাতে ব্রাউজার টোকেন পাঠাতে পারে
+    
     const jobsPromise = fetch('http://localhost:3000/Jobs', {
         credentials: 'include' 
     }).then(res => res.json());

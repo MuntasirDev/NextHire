@@ -10,61 +10,86 @@ import Browsejobs from "../Pages/Browsejobs/Browsejobs";
 import MyApllications from "../Pages/MyApllications/MyApllications";
 import AddJob from "../Pages/AddJob/AddJob";
 import MyPostedJobs from "../Pages/MYPostedJobs/MYPostedJobs";
+import AboutUs from "../Pages/About Us/AboutUs";
+import Error from "../Pages/Error/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: MainLayout,
+    element: <MainLayout />,
+    errorElement: <Error />,
     children: [
       {
         index: true,
-        Component: Home,
+        element: <Home />,
       },
       {
-        path: "browsejobs", 
-        Component: Browsejobs,
+        path: "browsejobs",
+        element: <Browsejobs />,
       },
       {
         path: "dashboard",
-         element: <PrivateRoute><MyApllications></MyApllications></PrivateRoute>
-
+        element: (
+          <PrivateRoute>
+            <MyApllications />
+          </PrivateRoute>
+        ),
       },
- 
       {
-        path: "/jobs/:id",
-        Component: JobDetails,
-        loader: ({ params }) => {
-          return fetch(`http://localhost:3000/Jobs/${params.id}`);
-        },
+        path: "jobs/:id",
+        element: <JobDetails />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/Jobs/${params.id}`),
       },
       {
         path: "jobApply/:id",
         element: (
           <PrivateRoute>
-            <JobApply></JobApply>
+            <JobApply />
           </PrivateRoute>
         ),
       },
       {
-         path: "addJob",
-         element: <PrivateRoute><AddJob></AddJob></PrivateRoute>
+        path: "addJob",
+        element: (
+          <PrivateRoute>
+            <AddJob />
+          </PrivateRoute>
+        ),
       },
       {
-          path: "Postedjob",
-          element: <PrivateRoute><MyPostedJobs></MyPostedJobs></PrivateRoute>
+        path: "Postedjob",
+        element: (
+          <PrivateRoute>
+            <MyPostedJobs />
+          </PrivateRoute>
+        ),
       },
       {
-    path: 'applications/:id', 
-    element: <PrivateRoute><MyApllications /></PrivateRoute>, 
-    loader: ({ params }) => fetch(`http://localhost:3000/applications/job/${params.id}`) 
-},
-      {
-        path: "/register",
-        Component: Register,
+        path: "applications/:id",
+        element: (
+          <PrivateRoute>
+            <MyApllications />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/applications/job/${params.id}`),
       },
       {
-        path: "/signin",
-        Component: SignIn,
+        path: "aboutus",
+        element: (
+          <PrivateRoute>
+            <AboutUs />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "signin",
+        element: <SignIn />,
       },
     ],
   },
