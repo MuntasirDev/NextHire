@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import HotJobsCard from "../Shared Components/HotJobsCard";
 
-// ইমেজগুলো তোর প্রোজেক্ট অনুযায়ী ইমপোর্ট করা আছে ধরে নিচ্ছি
+// ইমেজ ইমপোর্ট
 import Engineer1 from "../../assets/Images/Office1.jpg";
 import Engineer2 from "../../assets/Images/developer.jpg";
 import Engineer3 from "../../assets/Images/office2.jpg";
@@ -13,7 +13,6 @@ const Browsejobs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // তোর নতুন ডোমেইন লিংক
   const API_URL = "https://next-hire-server-steel.vercel.app/jobs";
 
   useEffect(() => {
@@ -22,12 +21,13 @@ const Browsejobs = () => {
         setLoading(true);
         setError(null);
 
-        // Fetch API ব্যবহার করছি
+        
         const response = await fetch(API_URL, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-          }
+          },
+          credentials: "include", 
         });
 
         if (!response.ok) {
@@ -52,7 +52,6 @@ const Browsejobs = () => {
     fetchAllJobs();
   }, []);
 
-  // লোডিং স্টেট
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center bg-white">
@@ -62,7 +61,6 @@ const Browsejobs = () => {
     );
   }
 
-  // এরর স্টেট
   if (error) {
     return (
       <div className="min-h-screen py-20 text-center bg-red-50 flex flex-col justify-center items-center px-4">
@@ -81,8 +79,6 @@ const Browsejobs = () => {
   return (
     <div className="min-h-screen py-12 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Hero Section */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-20 bg-white p-8 md:p-16 rounded-[40px] shadow-2xl border border-violet-50">
           <div className="lg:w-1/2">
             <h1 className="text-6xl font-black text-gray-900 leading-tight">
@@ -94,7 +90,6 @@ const Browsejobs = () => {
             </p>
           </div>
 
-          {/* Image Grid */}
           <div className="lg:w-1/2 grid grid-cols-2 gap-4">
             <img src={Engineer3} className="w-full h-32 object-cover rounded-2xl border-b-4 border-violet-500" alt="1" />
             <img src={Engineer2} className="w-full h-32 object-cover rounded-2xl border-b-4 border-indigo-400 mt-4" alt="2" />
@@ -103,7 +98,6 @@ const Browsejobs = () => {
           </div>
         </div>
 
-        {/* Jobs Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {jobs.length > 0 ? (
             jobs.map((job) => <HotJobsCard key={job._id} job={job} />)

@@ -7,7 +7,7 @@ import JobDetails from "../Pages/JobDetails/JobDetails";
 import PrivateRoute from "../Routes/PrivateRoute";
 import JobApply from "../JobApply/JobApply";
 import Browsejobs from "../Pages/Browsejobs/Browsejobs";
-import MyApllications from "../Pages/MyApllications/MyApllications"; // নিশ্চিত করুন ফাইলের বানান ঠিক আছে কিনা
+import MyApllications from "../Pages/MyApllications/MyApllications"; 
 import AddJob from "../Pages/AddJob/AddJob";
 import MyPostedJobs from "../Pages/MYPostedJobs/MYPostedJobs";
 import AboutUs from "../Pages/About Us/AboutUs";
@@ -38,10 +38,13 @@ const router = createBrowserRouter([
       {
         path: "jobs/:id",
         element: <JobDetails />,
-       loader: async ({ params }) => {
-   const res = await fetch(`https://next-hire-server-steel.vercel.app/jobs/${params.id}`);
-   return res.json();
-}
+        // ফিক্সড: credentials যোগ করা হয়েছে
+        loader: async ({ params }) => {
+          const res = await fetch(`https://next-hire-server-steel.vercel.app/jobs/${params.id}`, {
+            credentials: "include"
+          });
+          return res.json();
+        }
       },
       {
         path: "jobApply/:id",
@@ -74,15 +77,15 @@ const router = createBrowserRouter([
             <MyApllications />
           </PrivateRoute>
         ),
-        // ফিক্সড: https:// যোগ করা হয়েছে
+        
         loader: ({ params }) =>
-          fetch(`https://next-hire-server-steel.vercel.app/applications/job/${params.id}`),
+          fetch(`https://next-hire-server-steel.vercel.app/applications/job/${params.id}`, {
+            credentials: "include",
+          }),
       },
       {
         path: "aboutus",
-        element: (
-            <AboutUs />
-        ),
+        element: <AboutUs />,
       },
       {
         path: "register",

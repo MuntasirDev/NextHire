@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import UseAuth from "../Hooks/UseAuth";
-import {
-  FaRegLightbulb,
-} from "react-icons/fa";
+import { FaRegLightbulb } from "react-icons/fa";
 import Engineer1 from "../assets/Images/developer.jpg";
 import Engineer2 from "../assets/Images/developer2.jpg";
 import Engineer3 from "../assets/Images/coder3.jpg";
@@ -15,12 +13,13 @@ const JobApply = () => {
   const { id } = useParams();
   const { user } = UseAuth();
   const navigate = useNavigate();
-
   const [jobTitle, setJobTitle] = useState("Loading...");
 
-  // ১. Job Info Fetch করার জন্য ফিক্সড URL
   useEffect(() => {
-    fetch(`https://next-hire-server-steel.vercel.app/jobs/${id}`)
+    
+    fetch(`https://next-hire-server-steel.vercel.app/jobs/${id}`, {
+      credentials: "include"
+    })
       .then((res) => {
         if (!res.ok) throw new Error("Job details not found");
         return res.json();
@@ -60,7 +59,6 @@ const JobApply = () => {
     };
 
     try {
-      // ২. Axios POST রিকোয়েস্টে https:// এবং withCredentials যোগ করা হয়েছে
       const res = await axios.post(
         "https://next-hire-server-steel.vercel.app/applications",
         application,
@@ -74,7 +72,7 @@ const JobApply = () => {
           text: `You have successfully applied for ${jobTitle}`,
           confirmButtonColor: "#6D28D9",
         }).then(() => {
-          navigate("/my-applications"); // আপনার রাউট অনুযায়ী পরিবর্তন করতে পারেন
+          navigate("/dashboard"); // রাউট চেক করে নিস
         });
       }
     } catch (error) {
@@ -100,7 +98,6 @@ const JobApply = () => {
           <h5 className="text-sm font-semibold text-violet-600 uppercase tracking-widest">
             Job Application
           </h5>
-
           <h2 className="text-4xl font-extrabold text-gray-900 mt-2">
             Apply For: <span className="text-violet-700">{jobTitle}</span>
           </h2>
@@ -108,7 +105,6 @@ const JobApply = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Left Side: Images & Tips */}
           <div className="lg:col-span-1 space-y-8">
             <div className="grid grid-cols-3 lg:grid-cols-1 gap-4">
               <img src={Engineer1} className="w-full h-32 object-cover rounded-xl border-2 border-violet-200" alt="img" />
@@ -121,18 +117,14 @@ const JobApply = () => {
                 <FaRegLightbulb className="mr-2 text-violet-600" /> Tips
               </h3>
               <ul className="text-xs text-gray-600 space-y-3">
-                <li className="flex gap-2 font-medium">1. Make sure your drive link is public.</li>
-                <li className="flex gap-2 font-medium">2. Double check your phone number.</li>
+                <li>1. Make sure your drive link is public.</li>
+                <li>2. Double check your phone number.</li>
               </ul>
             </div>
           </div>
 
-          {/* Right Side: Form */}
           <div className="lg:col-span-2">
-            <form
-              onSubmit={handleSubmit}
-              className="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-violet-600 space-y-6"
-            >
+            <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-violet-600 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
@@ -147,33 +139,33 @@ const JobApply = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="text-sm font-bold text-gray-700 mb-2">LinkedIn URL</label>
-                  <input type="url" name="linkedIn_url" placeholder="https://linkedin.com/in/..." className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" required />
+                  <input type="url" name="linkedIn_url" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" required />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">GitHub URL</label>
-                  <input type="url" name="github_url" placeholder="https://github.com/..." className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" />
+                  <input type="url" name="github_url" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">Resume Drive Link</label>
-                <input type="url" name="resume_link" placeholder="Ensure link sharing is 'Anyone with the link'" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" required />
+                <input type="url" name="resume_link" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" required />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
-                  <input placeholder="+88 01234567911" type="tel" name="phone_number" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" required />
+                  <input type="tel" name="phone_number" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" required />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Current Location</label>
-                  <input placeholder="e,g, Dhaka" type="text" name="current_location" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" required />
+                  <input type="text" name="current_location" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" required />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">Cover Letter</label>
-                <textarea name="cover_letter" rows="4" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" placeholder="Why should we hire you?" required></textarea>
+                <textarea name="cover_letter" rows="4" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-violet-500" required></textarea>
               </div>
 
               <button
